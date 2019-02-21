@@ -1,0 +1,43 @@
+.TaskListDiv {
+    width: 500px;
+    height: 300px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    overflow: scroll;
+}
+
+.addBtn {
+    border-radius: 5px;
+    margin: 10px;
+}
+
+.Task {
+    display: block;
+    margin-left: 10px;
+}
+
+.TaskInfo {
+    width: 500px;
+    height: 300px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+.Name {
+    width: 350px;
+    height: 40px;
+    margin-left: 10px;
+    resize: none;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 25px;
+}
+
+.Detail {
+    width: 350px;
+    height: 200px;
+    margin-left: 10px;
+    resize: none;
+    border-radius: 5px;
+}

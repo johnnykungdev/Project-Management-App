@@ -1,0 +1,5 @@
+.Info-Table {
+    display: grid;
+
+    grid-template-rows: 20% 80%;
+}
