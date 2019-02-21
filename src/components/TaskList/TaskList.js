@@ -32,6 +32,8 @@ class TaskList extends Component {
                 description: '',
                 complete: '',
             },
+
+            filterText: '',
         }
     }
 
@@ -93,6 +95,7 @@ class TaskList extends Component {
         this.setState({ clickedTask: newTask });   
     }
     
+    //function of toggling the selected Task to completed or incomplete
     toggleComplete = (e) => {
         var Class = e.target.className;
         var newTask = this.state.clickedTask;
@@ -100,12 +103,16 @@ class TaskList extends Component {
         if (newTask.complete == true){
             newTask.complete = false;
             this.setState({ clickedTask: newTask });
-            console.log(this.state.Tasks);
         } else if (newTask.complete == false){
             newTask.complete = true;
             this.setState({ clickedTask: newTask });
-            console.log(this.state.Tasks);
         }
+    }
+
+    //function of filtering tasks by input keyword
+    filterText = (e) => {
+        var filterInput = e.target.value;
+        this.setState({ filterText: filterInput })
     }
 
     render(){
@@ -117,13 +124,14 @@ class TaskList extends Component {
                 <div className='TaskListDiv'>
                     <header className='Tasks-header-table'>                    
                         <button className='addBtn' onClick={this.handleAddEvent.bind(this)}>New Task</button>
-                        <FilterBox />
+                        <FilterBox filterText={this.filterText}/>
                     </header>
                     <div className='Tasks'>
                         <Tasks
                             Tasks={this.state.Tasks} 
                             onTaskUpdate={this.handleTask.bind(this)} 
                             onTaskInfo={this.getName.bind(this)}
+                            filterText={this.state.filterText}
                         />
                     </div>
                 </div>  

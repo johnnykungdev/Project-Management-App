@@ -8,6 +8,7 @@ class FilterBox extends Component {
             <input 
                 placeholder='Filter'
                 className='FilterBox'
+                onChange={this.props.filterText}
             />
         )
     }

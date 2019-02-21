@@ -12,6 +12,7 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    background: rgba(3, 161, 253, 0.281);
 
     display: grid;
     grid-template-rows: 10% 80% 10%;
@@ -21,7 +22,7 @@
 .TaskListDiv {
     border-radius: 10px;
     overflow: scroll;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 3px 0 rgba(0, 204, 255, 0.062);
     background: white;
 
     grid-row-start: 2; 
@@ -44,6 +45,7 @@
 .TaskInfo {
     border-radius: 10px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    background: white;
 
     grid-row-start: 2; 
     grid-row-end: 3;

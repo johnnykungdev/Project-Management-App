@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+    import React, {Component} from 'react';
 import TaskName from './TaskName/TaskName.js';
 import TaskDescription from './TaskDescription/TaskDescription.js';
 import './TaskInfo.css';
