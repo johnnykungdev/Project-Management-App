@@ -1,0 +1,19 @@
+.Task {
+    display: block;
+    margin-left: 10px;
+    cursor: pointer;
+    height: 30px;
+    width: 95%;
+    margin-top: 5px;
+}
+
+.Task:hover {
+    background: orange;
+    color: white;
+    outline: 0;
+    border: 1px solid orange;
+}
+
+.Task:focus {
+    outline: 0;
+}

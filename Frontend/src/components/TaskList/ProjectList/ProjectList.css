@@ -1,0 +1,12 @@
+.ProjectTable {
+    width: 100%;
+    padding: 10px;
+}
+
+.Project {
+    background: rgb(221, 217, 217);
+    padding: 10px;
+    font-size: 20px;
+    display: block;
+    margin-bottom: 10px;
+}

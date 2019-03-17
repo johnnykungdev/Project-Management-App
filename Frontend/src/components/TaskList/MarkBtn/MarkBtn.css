@@ -1,0 +1,29 @@
+.MarkBtn {
+    border: 1px solid orange;
+    color: orange;
+    border-radius: 4px;
+    background: white;
+    float: right;
+    font-size: 14px;
+    height: 30px;
+}
+
+.MarkBtn:hover {
+    background: orange;
+    color: white;
+}
+
+.CompletedBtn {
+    border: 1px solid orange;
+    border-radius: 4px;
+    background: orange;
+    color: white;
+    float: right;
+    font-size: 14px;
+    height: 30px;
+}
+
+.CompletedBtn:hover {
+    background: white;
+    color: orange;
+}

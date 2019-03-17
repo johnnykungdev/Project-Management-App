@@ -1,0 +1,39 @@
+.register-page {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    padding-left: 35%;
+    padding-top: 180px;
+}
+
+.register-format {
+    width: 350px;
+    border: 2px solid gray;
+    border-radius: 20px;
+    text-align: center;
+    margin: 0;
+    display: block;
+}
+
+.register-name {
+    margin: 20px;
+}
+
+.register-email {
+    margin: 20px;
+}
+
+.register-pass {
+    margin: 20px;
+}
+
+.regis-input {
+    background-color: rgba(red, rgba(102, 245, 102, 0.479), blue, alpha)
+}
+
+.signUpBtn {
+    border: 1px solid gray;
+    width: 100px;
+    text-align: center;
+    margin: 20px;
+}

@@ -1,0 +1,123 @@
+.Window {
+    width: 100%;
+    height: 100%;
+
+    display: grid;
+    grid-template-rows: 10% 80% 10%;
+    grid-template-columns: 20% 2% 31% 2% 43% 2%;
+
+    background: rgba(248, 137, 137, 0.15);
+
+}
+
+.AddMember {
+    grid-row-start: 1; 
+    grid-row-end: 2;
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    background: green;
+}
+
+.SignOut {
+    grid-row-start: 1; 
+    grid-row-end: 2;
+    grid-column-start: 5;
+    grid-column-end: 6;
+
+    margin-top: 20px;
+    text-align: right;
+}
+
+.Project-Panel {
+    grid-row-start: 1; 
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+    background: white;
+
+    display: grid;
+    grid-template-rows: 10% 10% 90%;
+}
+
+.User {
+    border: 1px solid white;
+    background: black;
+    color: white;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 25px;    
+}
+
+.NewProject {
+    border-bottom: 1px solid gray;
+    color: black;
+    text-align: center;
+    padding-top: 10px;
+}
+
+#NewProjectBtn {
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.TaskListDiv {
+    
+    border-radius: 10px;
+    overflow: scroll;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    background: white;
+
+    grid-row-start: 2; 
+    grid-row-end: 3;
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    display: grid;
+    grid-template-rows: 10% 90%;
+
+}
+
+.addBtn {
+    border-radius: 5px;
+    margin: 10px;
+    margin-top: 15px;
+    margin-left: 20px;
+}
+
+.sectionBtn {
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.TaskInfo {
+    border-radius: 10px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
+    background: white;
+
+    grid-row-start: 2; 
+    grid-row-end: 3;
+    grid-column-start: 5;
+    grid-column-end: 6;
+    display: grid;
+    grid-template-rows: 10% 90%;
+}
+
+.Tasks-header-table {
+    border-bottom: 1px solid #e0e6e8;
+}
+
+.Tasks {
+    padding: 10px;
+}
+
+.TaskInfo-header-table {
+    grid-row-start: 1; 
+    grid-row-end: 0;
+    border-bottom: 1px solid #e0e6e8;
+    padding-top: 10px;
+    padding-right: 20px;
+    float: right;
+}
