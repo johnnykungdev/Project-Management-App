@@ -17,7 +17,6 @@ class TaskList extends Component {
         this.state = {
             projectlist: [],
             onProject_identifier: '',
-            onProject_name: '',
             onProject_isAdmin: '',
             Tasks: [],
 
@@ -341,7 +340,6 @@ class TaskList extends Component {
                         user={this.props.user}
                         onProject_identifier={this.state.onProject_identifier}
                         onProject_isAdmin={this.state.onProject_isAdmin}
-                        onProject_name={this.state.onProject_name}
                     />
                 </div>
                 <div className='SignOut'>

@@ -16,7 +16,7 @@
     grid-column-start: 3;
     grid-column-end: 4;
 
-    background: green;
+    background: rgba(248, 137, 137, 0.15);
 }
 
 .SignOut {

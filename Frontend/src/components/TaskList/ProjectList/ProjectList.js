@@ -23,6 +23,7 @@ class ProjectList extends Component {
                     project_identifier={project.project_identifier}
                     getProject={this.getProject}
                     handleProject={this.props.handleProject}
+                    key={index}
                     />
             )
         })
