@@ -6,6 +6,8 @@ class ProjectList extends Component {
     getProject = (e) => {
         var id = e.target.id;
         var user_identifier = this.props.user.user_identifier;
+
+        console.log(id);
         
         this.props.loadTask(id);
         this.props.validIsAdmin(user_identifier, id);
@@ -19,7 +21,6 @@ class ProjectList extends Component {
                 <Project 
                     project_name={project.project_name} 
                     project_identifier={project.project_identifier}
-                    key={index}
                     getProject={this.getProject}
                     handleProject={this.props.handleProject}
                     />

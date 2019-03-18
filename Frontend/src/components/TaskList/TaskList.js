@@ -6,6 +6,7 @@ import MarkBtn from './MarkBtn/MarkBtn.js';
 import FilterBox from './FilterBox/FilterBox.js';
 import ProjectList from './ProjectList/ProjectList.js';
 import AddProjectMember from './AddProjectMember/AddProjectMember.js';
+import User from './User/User.js';
 import './TaskList.css';
 
 class TaskList extends Component {
@@ -79,7 +80,7 @@ class TaskList extends Component {
     loadTask = (project_identifier) => {
         var onProject_identifier = project_identifier;
 
-        fetch('http://localhost:3000/getTask', {
+        fetch('http://localhost:3000/loadTask', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -90,20 +91,6 @@ class TaskList extends Component {
         .then(Tasks => {
             this.setState({ Tasks });
             this.setState({ onProject_identifier });
-
-            var onProject = this.state.projectlist.find(
-                (project) => {
-                    if(project.project_identifier = onProject_identifier){
-                        return project;
-                    }
-                }
-            )
-
-            var onProject_name = onProject.project_name;
-
-            this.setState({ onProject_name })
-
-            console.log(this.state.onProject_name);
 
             console.log(this.state.onProject_identifier)
             console.log(Tasks)});
@@ -337,7 +324,7 @@ class TaskList extends Component {
         return (
             <div className='Window'>
                 <div className='Project-Panel'>
-                    <div className='User'>Hi, {this.props.user.name}</div>
+                    <User className='User' username={this.props.user.name}/>
                     <div className='NewProject'>
                         <button onClick={this.AddNewProject} id='NewProjectBtn'>New Project</button>
                     </div>

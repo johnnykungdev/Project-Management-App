@@ -1,0 +1,18 @@
+.user {
+    text-align: center;
+}
+
+.user_icon {
+    height: 40px;
+    display: inline-block;
+    text-justify: ceneter;
+    margin-right: 15px;
+    vertical-align: middle;
+}
+
+.user_name {
+    display: inline-block;
+    font-size: 25px;
+    vertical-align: middle;
+    text-transform: capitalize;
+}

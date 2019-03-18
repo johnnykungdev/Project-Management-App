@@ -6,7 +6,6 @@ class AddProjectMember extends Component {
         this.state = {
             email: '',
             onProject_identifier: '',
-            onProject_name: ''
         }
     }
 
@@ -19,11 +18,9 @@ class AddProjectMember extends Component {
     addNewMember = () => {
         var email = this.state.email;
         var onProject_identifier = this.props.onProject_identifier;
-        var onProject_name = this.props.onProject_name;
 
 
         console.log(onProject_identifier);
-        console.log(onProject_name);
 
         fetch('http://localhost:3000/addNewMember', {
             method: 'post',
@@ -31,7 +28,6 @@ class AddProjectMember extends Component {
             body: JSON.stringify({
                 email,
                 onProject_identifier,
-                onProject_name
             })
         })
         .then(response => response.json())

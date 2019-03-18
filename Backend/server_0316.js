@@ -130,6 +130,8 @@ app.post('/addNewMember', (req, res) => {
                 })
                     .into(`${user_identifier}`)
                     .then(data => console.log(data))
+                    .then(trx.commit)
+                    .then(trx.rollback)
             })
         })
 
@@ -336,14 +338,18 @@ app.post('/ProjectList', (req, res) => {
                             })
                         }
 
-                        console.log(new_projectlist);
-                        res.send(new_projectlist);
+                        var res_list = new_projectlist.sort((a, b) => {
+                            return a.index - b.index;
+                        })
+
+                        console.log(res_list);
+                        res.send(res_list);
                     })
             })
     })
 })
 
-app.post('/getTask', (req, res) => {
+app.post('/loadTask', (req, res) => {
     const { project_identifier } = req.body;
     console.log(project_identifier);
     
