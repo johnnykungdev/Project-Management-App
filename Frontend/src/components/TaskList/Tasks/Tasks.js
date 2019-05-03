@@ -8,6 +8,7 @@ class Tasks extends Component {
         var onTaskUpdate = this.props.onTaskUpdate;
         var onTaskInfo = this.props.onTaskInfo;
         var filterText = this.props.filterText;
+        var toggleCheckbox = this.props.toggleCheckbox;
 
         var generateTasks = this.props.Tasks.map(
             (Task) => {
@@ -17,16 +18,18 @@ class Tasks extends Component {
                             Task={Task}
                             onTaskUpdate={onTaskUpdate}
                             onTaskInfo={onTaskInfo}
+                            toggleCheckbox={toggleCheckbox}
                             key={Task.id}
                         />
                     )
-                } else if (filterText !== ''){
-                    if ( Task.name.includes(filterText) === true){
+                } else {
+                    if (Task.name.includes(filterText)){
                         return (
                             <TaskRow
                                 Task={Task}
                                 onTaskUpdate={onTaskUpdate}
                                 onTaskInfo={onTaskInfo}
+                                toggleCheckbox={toggleCheckbox}
                                 key={Task.id}
                             />
                         )

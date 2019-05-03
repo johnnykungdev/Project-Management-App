@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TaskList from './components/TaskList/TaskList.js';
-import SignIn from './components/SignIn/SignIn.js';
-import Register from './components/Register/Register.js';
+import SignIn from './user/signIn/signIn.js';
+import Register from './user/register/register.js';
 import './App.css';
 
 
@@ -37,7 +37,7 @@ class App extends Component {
             )
         } else if (route === 'home'){
             return (
-                <div className='window'>
+                <div>
                     <TaskList user={this.state.user} onRouteChange={this.onRouteChange} />
                 </div>
             )

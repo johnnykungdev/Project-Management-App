@@ -1,23 +1,37 @@
-.Window {
+.window {
     width: 100%;
     height: 100%;
+    overflow-y: hidden;
 
     display: grid;
-    grid-template-rows: 10% 80% 10%;
-    grid-template-columns: 20% 2% 31% 2% 43% 2%;
-
-    background: rgba(248, 137, 137, 0.15);
-
+    grid-template-rows: 100%;
+    grid-template-columns: 275px auto;
 }
 
-.AddMember {
-    grid-row-start: 1; 
-    grid-row-end: 2;
-    grid-column-start: 3;
-    grid-column-end: 4;
+.project-panel {
+    grid-column-start: 1;
+    grid-column-end: 2;
 
-    background: rgba(248, 137, 137, 0.15);
+    background: white;
+
+    display: grid;
+    grid-template-rows: 75px 50px 50px 1fr;
 }
+
+.task-bg {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    height: 100%;
+
+    background: rgba(235, 222, 106, 0.479);
+    text-align: center;
+
+    display: grid;
+    grid-template-columns: 50px 1fr 1fr 50px;
+    grid-template-rows: 50px 75px 1fr 50px;
+}
+
+
 
 .SignOut {
     grid-row-start: 1; 
@@ -29,18 +43,6 @@
     text-align: right;
 }
 
-.Project-Panel {
-    grid-row-start: 1; 
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 2;
-
-    background: white;
-
-    display: grid;
-    grid-template-rows: 10% 10% 90%;
-}
-
 .User {
     border: 1px solid white;
     background: black;
@@ -50,11 +52,15 @@
     font-size: 25px;    
 }
 
+.signOut {
+    text-align: center;
+}
+
 .NewProject {
     border-bottom: 1px solid gray;
     color: black;
     text-align: center;
-    padding-top: 10px;
+    padding: 0;
 }
 
 #NewProjectBtn {
@@ -69,25 +75,22 @@
 #NewProjectBtn:hover {
     background: rgb(95, 95, 95);
 }
-
 .TaskListDiv {
     
     border-radius: 10px;
-    overflow: scroll;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
     background: white;
 
-    grid-row-start: 2; 
-    grid-row-end: 3;
-    grid-column-start: 3;
-    grid-column-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 
     display: grid;
-    grid-template-rows: 10% 90%;
-
+    grid-template-rows: 75px 1fr;
 }
 
-.addBtn {
+.new-task-btn {
     border-radius: 5px;
     margin: 10px;
     margin-top: 15px;
@@ -103,28 +106,69 @@
     border-radius: 10px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
     background: white;
-
-    grid-row-start: 2; 
-    grid-row-end: 3;
-    grid-column-start: 5;
-    grid-column-end: 6;
-    display: grid;
-    grid-template-rows: 10% 90%;
+    display: none;
 }
 
 .Tasks-header-table {
-    border-bottom: 1px solid #e0e6e8;
+    border-bottom: 2px solid #e0e6e8;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 2;
+    grid-row-end: 3;
+
+    background: white;
+    padding-top: 10px;
 }
 
-.Tasks {
-    padding: 10px;
-}
 
-.TaskInfo-header-table {
+.task-info-header-table {
     grid-row-start: 1; 
-    grid-row-end: 0;
+    grid-row-end: 2;
     border-bottom: 1px solid #e0e6e8;
     padding-top: 10px;
     padding-right: 20px;
     float: right;
 }
+
+.task-list {
+    overflow-y: scroll;
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    border: 20px solid white;
+
+    background: white;
+}
+
+.task-list.is-open {
+    overflow-y: scroll;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 3;
+    grid-row-end: 4;
+
+    border: 20px solid white;
+
+    background: white;
+}
+
+
+.task-info {
+    display: none;
+}
+
+.task-info.is-open {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    border-left: 2px solid #e0e6e8;
+
+    background: white;
+    display: grid;
+
+    grid-template-rows: 75px 200px auto;
+}   

@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import Tasks from './Tasks/Tasks.js';
 import TaskInfo from './TaskInfo/TaskInfo.js';
-import SignOut from '../SignOut/SignOut.js';
+import SignOut from '../../user/signOut/signOut.js';
 import MarkBtn from './MarkBtn/MarkBtn.js';
 import FilterBox from './FilterBox/FilterBox.js';
 import ProjectList from './ProjectList/ProjectList.js';
 import AddProjectMember from './AddProjectMember/AddProjectMember.js';
 import User from './User/User.js';
+import TaskName from './TaskName/taskName.js';
+import TaskDescription from './TaskDescription/taskDescription.js';
 import './TaskList.css';
 
 class TaskList extends Component {
@@ -189,7 +191,6 @@ class TaskList extends Component {
         var id = e.target.id;
         var name = e.target.value;
         var onProject_identifier = this.state.onProject_identifier;
-        console.log(id);
 
         fetch('http://localhost:3000/TaskName', {
            method: 'put',
@@ -211,9 +212,10 @@ class TaskList extends Component {
                     }
                 )
 
+                console.log(Tasks);
+
                 this.setState({Tasks});
                 this.setState({clickedTask})
-
             })
     }
 
@@ -222,6 +224,24 @@ class TaskList extends Component {
         var id = e.target.id;
         var onProject_identifier = this.state.onProject_identifier;
         
+        const task_info = document.getElementById('task-info');
+
+        const task_list = document.getElementById('task-list');
+
+        console.log(task_info);
+        console.log(task_list);
+        console.log(task_list.className);
+
+        if (task_list.className == 'task-list'){
+            task_info.classList.toggle('is-open');
+            task_list.classList.toggle('is-open');
+        } else {
+            
+        }
+
+
+
+
 
         fetch('http://localhost:3000/TaskInfo', {
             method: 'post',
@@ -237,7 +257,7 @@ class TaskList extends Component {
                 this.setState({ clickedTask })
                 console.log(this.state.clickedTask);
             })
-    }
+    }   
 
     //get the description of the selected Task
     onHandleDescription = (e) => {
@@ -313,6 +333,26 @@ class TaskList extends Component {
         }
     }
 
+    toggleCheckbox = (e) => {
+        console.log(e.target.id);
+
+        var id = e.target.id;
+        var onProject_identifier = this.state.onProject_identifier;
+
+        fetch('http://localhost:3000/checkbox', {
+            method: 'put',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                onProject_identifier,
+                id
+            })
+        })
+        .then(response => response.json())
+        .then(Tasks => {
+            this.setState({ Tasks })
+        })
+    }
+
     //function of filtering tasks by input keyword
     filterText = (e) => {
         var filterInput = e.target.value;
@@ -321,9 +361,12 @@ class TaskList extends Component {
 
     render(){
         return (
-            <div className='Window'>
-                <div className='Project-Panel'>
+            <div className='window'>
+                <div className='project-panel'>
                     <User className='User' username={this.props.user.name}/>
+                    <div className='signOut'>
+                        <SignOut onRouteChange={this.props.onRouteChange}/>
+                    </div>
                     <div className='NewProject'>
                         <button onClick={this.AddNewProject} id='NewProjectBtn'>New Project</button>
                     </div>
@@ -335,44 +378,33 @@ class TaskList extends Component {
                         handleProject={this.handleProject}
                     />
                 </div>
-                <div className='AddMember'>
-                    <AddProjectMember
-                        user={this.props.user}
-                        onProject_identifier={this.state.onProject_identifier}
-                        onProject_isAdmin={this.state.onProject_isAdmin}
-                    />
-                </div>
-                <div className='SignOut'>
-                    <SignOut onRouteChange={this.props.onRouteChange}/>
-                </div>
-                    <div className='TaskListDiv'>
-                        <header className='Tasks-header-table'>                    
-                            <button className='addBtn' onClick={this.handleAddEvent.bind(this)}>New Task</button>
-                            <button className='sectionBtn' onClick={this.handleAddSection.bind(this)}>New Section</button>
-                            <FilterBox filterText={this.filterText}/>
-                        </header>
-                        <div className='Tasks'>
-                            <Tasks
-                                Tasks={this.state.Tasks} 
-                                onTaskUpdate={this.handleTask.bind(this)} 
-                                onTaskInfo={this.getInfo.bind(this)}
-                                filterText={this.state.filterText}
-                            />
-                        </div>
-                    </div>  
-                    <div className='TaskInfo'>
-                        <header className='TaskInfo-header-table'>
-                            <MarkBtn 
-                                clickedTask={this.state.clickedTask} 
-                                toggleTaskComplete={this.toggleTaskComplete.bind(this)}
-                                />
-                        </header>
-                        <TaskInfo 
-                            clickedTask={this.state.clickedTask}
+                <div className='task-bg'>
+                    <header className='Tasks-header-table'>                    
+                        <button className='new-task-btn' onClick={this.handleAddEvent.bind(this)}>New Task</button>
+                        <button className='sectionBtn' onClick={this.handleAddSection.bind(this)}>New Section</button>
+                        <FilterBox filterText={this.filterText}/>
+                    </header>
+                    <div className='task-list' id='task-list'>
+                        <Tasks
+                            Tasks={this.state.Tasks} 
+                            onTaskUpdate={this.handleTask.bind(this)} 
+                            onTaskInfo={this.getInfo.bind(this)}
+                            toggleCheckbox={this.toggleCheckbox}
+                            filterText={this.state.filterText}
+                        />  
+                    </div>
+                    <div className='task-info' id='task-info'>
+                        <TaskName 
                             onTaskUpdate={this.handleTask.bind(this)}
+                            clickedTask={this.state.clickedTask}
+                        />
+                        <TaskDescription 
+                            className='TaskDescription-table'
+                            clickedTask={this.state.clickedTask}
                             onHandleDescription={this.onHandleDescription.bind(this)}
                         />
                     </div>
+                </div>
             </div>
         )
     }

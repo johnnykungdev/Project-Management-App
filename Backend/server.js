@@ -31,26 +31,49 @@ app.post('/Projects', (req, res) => {
     db.transaction(trx => {
         return trx
             .insert({
-                project_identifier,
                 project_name,
-                isAdmin: 1,
+                project_identifier
             })
-            .into(`${user_identifier}`)
-            .then(project => {
-                return db.schema.withSchema('public').createTable(`${project_identifier}`, (project) => {
-                    project.increments('index'),
-                    project.text('id'),
-                    project.string('name', [100]),
-                    project.text('description'),
-                    project.string('complete', [10])
+            .into('projectlist')
+            .then(() => {
+                return trx
+                .insert({
+                    project_identifier,
+                    isAdmin: 1,
                 })
-                .then(() => {
-                    return trx.select('*').from(`${user_identifier}`)
-                        .then(data => {
-                            res.send(data);
-                        })
-                        .then(trx.commit)
-                        .catch(trx.rollback)
+                .into(`${user_identifier}`)
+                .then(project => {
+                    return db.schema.withSchema('public').createTable(`${project_identifier}`, (project) => {
+                        project.increments('index'),
+                        project.text('id'),
+                        project.string('name', [100]),
+                        project.text('description'),
+                        project.string('complete', [10])
+                    })
+                    .then(() => {
+                        return trx.select('project_identifier').from(`${user_identifier}`)
+                            .then(data => {
+                                var project_identifier_list = data.map((project) => {
+                                    return project.project_identifier;
+                                })
+
+                                return trx.select('*').from('projectlist')
+                                    .then((projectlist) => {
+                                        var new_projectlist = [];
+                                        console.log(project_identifier_list);
+                                        
+                                        for(let i = 0; i < project_identifier_list.length; i++){
+                                            projectlist.find((project) => {
+                                                if(project.project_identifier == project_identifier_list[i]){
+                                                    new_projectlist.push(project);
+                                                }
+                                            })
+                                        }
+                                        console.log(new_projectlist);
+                                        res.send(new_projectlist);
+                                    })
+                            })
+                    })
                 })
             })
     })
@@ -60,23 +83,41 @@ app.post('/ProjectName', (req, res) => {
     const { user_identifier, project_identifier, name } = req.body;
     console.log(req.body);
 
-    db(`${user_identifier}`).where('project_identifier', '=', project_identifier)
-        .update({
-            project_name: name
-        })
-        .then(() => {
-            db.select('*').from(`${user_identifier}`)
-            .then(oldlist => {
-                var newlist = oldlist.sort((a, b) => {
-                    return a.id - b.id;
-                })
-                res.send(newlist);
+    db.transaction(trx => {
+        return trx.select('project_name').from('projectlist').where('project_identifier', '=', project_identifier)
+            .update({
+                project_name: name
             })
-        })
+            .then(() => {
+                return trx.select('project_identifier').from(`${user_identifier}`)
+                .then(data => {
+                    var project_identifier_list = data.map((project) => {
+                        return project.project_identifier;
+                    })
+
+                    return trx.select('*').from('projectlist')
+                        .then((projectlist) => {
+                            var new_projectlist = [];
+                            console.log(project_identifier_list);
+                            
+                            for(let i = 0; i < project_identifier_list.length; i++){
+                                projectlist.find((project) => {
+                                    if(project.project_identifier == project_identifier_list[i]){
+                                        new_projectlist.push(project);
+                                    }
+                                })
+                            }
+
+                            console.log(new_projectlist);
+                            res.send(new_projectlist);
+                        })
+                })
+            })
+    })
 })
 
 app.post('/addNewMember', (req, res) => {
-    const { email, onProject_identifier, onProject_name } = req.body;
+    const { email, onProject_identifier } = req.body;
 
     db.select('user_identifier').from('users').where('email', '=', email)
         .then(identifier => {
@@ -85,11 +126,12 @@ app.post('/addNewMember', (req, res) => {
             db.transaction(trx => {
                 return trx.insert({
                     project_identifier: onProject_identifier,
-                    project_name: onProject_name,
                     isAdmin: 0
                 })
                     .into(`${user_identifier}`)
                     .then(data => console.log(data))
+                    .then(trx.commit)
+                    .then(trx.rollback)
             })
         })
 
@@ -135,6 +177,7 @@ app.put('/TaskName', (req, res) => {
                                 return a.index - b.index;
                             }
                         )
+                        console.log(newlist);
                         res.send(newlist);
                 })
             }
@@ -197,6 +240,53 @@ app.put('/TaskComplete', (req, res) => {
 
 }) 
 
+app.put('/checkbox', (req, res) => {
+    const { onProject_identifier, id } = req.body;
+
+    db.select('complete').from(`${onProject_identifier}`).where('id', '=', id)
+        .then(data => {
+            console.log(data[0].complete);
+            var complete = data[0].complete;
+            if(complete == 1){
+                var toggle = 0;
+                db(`${onProject_identifier}`).where('id', '=', id)
+                    .update({
+                        complete: toggle
+                    })
+                    .then(() => {
+                        db.select('*').from(`${onProject_identifier}`)
+                        .then((oldlist) => {
+                            var newlist = oldlist.sort(
+                                (a, b) => {
+                                    return a.index - b.index;
+                                }
+                            )
+
+                            res.send(newlist);
+                        })
+                    })
+            } else {
+                var toggle = 1;
+                db(`${onProject_identifier}`).where('id', '=', id)
+                    .update({
+                        complete: toggle
+                    })
+                    .then(() => {
+                        db.select('*').from(`${onProject_identifier}`)
+                        .then((oldlist) => {
+                            var newlist = oldlist.sort(
+                                (a, b) => {
+                                    return a.index - b.index;
+                                }
+                            )
+
+                            res.send(newlist);
+                        })
+                    })
+            }
+        })
+})
+
 app.post('/register', (req, res) => {
 
     const { name, email, password, joined, user_identifier} = req.body;
@@ -220,7 +310,6 @@ app.post('/register', (req, res) => {
                     db.schema.withSchema('public').createTable(`${user_identifier}`, (table) => {
                         table.increments('id'),
                         table.text('project_identifier')
-                        table.text('project_name'),
                         table.text('isAdmin')
                     })
                     .then(() => {
@@ -275,22 +364,55 @@ app.post('/ProjectList', (req, res) => {
     const user_identifier = req.body.user.user_identifier;
     console.log(user_identifier);
 
-    db.select('*').from(`${user_identifier}`)
-        .then(projectlist => res.send(projectlist))
+    db.transaction(trx => {
+        return trx.select('project_identifier').from(`${user_identifier}`)
+            .then(data => {
+                var project_identifier_list = data.map((project => {
+                    return project.project_identifier;
+                }))
+
+                console.log(project_identifier_list);
+
+                return trx.select('*').from('projectlist')
+                    .then(projectlist => {
+                        console.log(projectlist);
+                        var new_projectlist = [];
+
+                        for(let i = 0; i < project_identifier_list.length; i++){
+                            projectlist.find((project) => {
+                                if(project.project_identifier == project_identifier_list[i]){
+                                    new_projectlist.push(project)
+                                }
+                            })
+                        }
+
+                        var res_list = new_projectlist.sort((a, b) => {
+                            return a.index - b.index;
+                        })
+
+                        console.log(res_list);
+                        res.send(res_list);
+                    })
+            })
+    })
 })
 
-app.post('/getTask', (req, res) => {
+app.post('/loadTask', (req, res) => {
     const { project_identifier } = req.body;
     console.log(project_identifier);
     
     db.select('*').from(`${project_identifier}`)
         .then(tasklist => {
-            console.log(tasklist);
-            res.send(tasklist)})
+            var newlist = tasklist.sort((a, b) => {
+                return a.index - b.index;
+            })
+            console.log(newlist);
+            res.send(newlist)})
 })
 
 app.post('/validIsAdmin', (req, res) => {
     const { user_identifier, project_identifier } = req.body;
+    console.log(req.body);
 
     db.select('isAdmin').from(`${user_identifier}`).where('project_identifier', '=', project_identifier)
         .then(isAdmin => {

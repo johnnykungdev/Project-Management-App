@@ -1,0 +1,19 @@
+.TaskName {
+    height: 40px;
+    width: 90%;
+    border: none;
+    resize: none;
+    padding: 7px;
+    font-size: 20px;
+}
+
+.labelName {
+    margin: 10px;
+    margin-left: 50px;
+    font-Size: 25px;
+}
+
+.task-name-table {
+    border-bottom: 2px solid #e0e6e8;
+    padding-top: 20px;
+}
